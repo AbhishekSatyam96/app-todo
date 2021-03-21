@@ -5,14 +5,15 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { editTodo } from '../redux/actions/TodoActions';
 
-const Item = ({ title, description }) => (
-    <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
-        <Text>{description}</Text>
-    </View>
-);
-
+const editTask = (task, description) => {
+    const payload = {
+        task,
+        description
+    }
+    console.log("edit payload", payload);
+}
 
 const TodoList = (props) => {
     useEffect(() => {
@@ -23,6 +24,23 @@ const TodoList = (props) => {
         getId();
     }, [])
 
+    const Item = ({ title, description }) => (
+        <View style={styles.item}>
+            <Text style={styles.title}>{title}</Text>
+            <Text>{description}</Text>
+            <Button
+                title="Edit"
+                onPress={() => props.navigation.navigate("TodoForm", {
+                    task: title,
+                    description
+                })}
+            />
+            <Button
+                title="Delete"
+            />
+        </View>
+    );
+
     const signOut = async () => {
         await GoogleSignin.revokeAccess();
         await GoogleSignin.signOut();
@@ -31,8 +49,9 @@ const TodoList = (props) => {
 
     console.log("props of todolist", props);
     const renderItem = ({ item }) => {
+        console.log("item", item);
         return (
-            <Item title={item.Task} description={item.Description} />)
+            <Item title={item.task} description={item.description} />)
     };
 
     return (
@@ -44,7 +63,7 @@ const TodoList = (props) => {
             <FlatList
                 data={props.todoData}
                 renderItem={renderItem}
-                keyExtractor={item => item.Task}
+                keyExtractor={item => item.task}
             />
             <Button
                 onPress={signOut}

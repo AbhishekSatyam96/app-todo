@@ -1,22 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, Button } from 'react-native';
+import { addTodo, editTodo } from '../redux/actions/TodoActions';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-const TodoForm = () => {
+const TodoForm = (props) => {
+    const [task, setTask] = useState('');
+    const [description, setDescription] = useState('');
+
+    useEffect(() => {
+        if (props.route.params?.task) {
+            setTask(props.route.params.task);
+            setDescription(props.route.params.description);
+        }
+    }, [])
+
+    const createTodo = () => {
+        if (props.route.params?.task){
+            const payload = {
+                task,
+                description,
+                id: 1
+            }
+            props.editTodo(payload)
+        }else{
+            const payload = {
+                id: props.todoData.length + 1,
+                task,
+                description,
+            }
+            props.addTodo(payload);
+        }
+        props.navigation.navigate("TodoList");
+    }
+    console.log("props of todoForm", props);
     return (
-        <View 
+        <View
             style={styles.container}
         >
             <TextInput
                 style={styles.input}
                 placeholder="Task name"
+                value={task}
+                onChangeText={val => setTask(val)}
             />
             <TextInput
                 style={styles.input}
                 placeholder="Description"
+                value={description}
+                onChangeText={val => setDescription(val)}
             />
-            <Button 
+            <Button
                 title="Add Todo"
-                // onPress={}
+                onPress={createTodo}
             />
         </View>
     )
@@ -36,4 +72,20 @@ const styles = StyleSheet.create({
     },
 });
 
-export default TodoForm;
+const mapStateToProps = state => {
+    return {
+        todoData: state.TodoState.todoData
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return bindActionCreators(
+        {
+            addTodo,
+            editTodo
+        },
+        dispatch
+    );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoForm);
