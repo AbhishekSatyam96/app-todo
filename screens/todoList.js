@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-    AsyncStorage, Button, SafeAreaView, FlatList, StyleSheet, View, Text
+    AsyncStorage, Button, SafeAreaView, FlatList, StyleSheet, View, Text   
 } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -76,6 +76,15 @@ const TodoList = (props) => {
 
     return (
         <SafeAreaView>
+            <Text
+                style={{
+                    fontSize: 16,
+                    textAlign: 'center',
+                    margin: 10,
+                    padding: 10,
+                    fontWeight: 'bold'
+                }}
+            >Welcome {props.route.params.userName}</Text>
             <Button
                 title="Create Todo"
                 onPress={() => props.navigation.navigate("TodoForm", {

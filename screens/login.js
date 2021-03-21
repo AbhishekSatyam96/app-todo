@@ -20,7 +20,8 @@ const Login = ({ navigation }) => {
             if (userInfo?.user?.id) {
                 // AsyncStorage.setItem('id', userInfo.user.id);
                 navigation.navigate("TodoList" , {
-                    userId: userInfo.user.id
+                    userId: userInfo.user.id,
+                    userName: userInfo.user.name
                 });
             }
         } catch (error) {
