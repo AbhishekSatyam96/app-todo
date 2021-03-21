@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, View, StyleSheet } from 'react-native'
+import { Button, View, StyleSheet, AsyncStorage } from 'react-native'
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -8,7 +8,7 @@ import {
 import Todo from './todo';
 
 
-const Login = () => {
+const Login = ({ navigation }) => {
     const [gId, setGid] = useState(null);
     useEffect(() => {
         GoogleSignin.configure({
@@ -21,6 +21,8 @@ const Login = () => {
             const userInfo = await GoogleSignin.signIn();
             if (userInfo?.user?.id) {
                 setGid(userInfo.user.id);
+                AsyncStorage.setItem('id', userInfo.user.id);
+                navigation.navigate("Todo");
             }
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -50,7 +52,6 @@ const Login = () => {
     console.log("gid...>", gId);
     return (
         <View style={styles.container}>
-            {gId ? <Todo /> : null}
             <GoogleSigninButton
                 style={{ width: 192, height: 48 }}
                 size={GoogleSigninButton.Size.Wide}
@@ -59,21 +60,21 @@ const Login = () => {
             // disabled={this.state.isSigninInProgress} 
             />
             {gId ?
-            <Button
-                onPress={signOut}
-                title="LogOut"
-            /> : null}
+                <Button
+                    onPress={signOut}
+                    title="LogOut"
+                /> : null}
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-  });
+});
 
 export default Login;

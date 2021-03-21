@@ -1,7 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, AsyncStorage } from 'react-native';
 
 const Todo = () => {
+    const getId = async() => {
+        const id = await AsyncStorage.getItem('id');
+        console.log("here id", id);
+    }
+    getId();
     return (
         <Text>I am todo...</Text>
     )
