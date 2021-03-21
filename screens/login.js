@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, AsyncStorage } from 'react-native'
+import { Text, View, StyleSheet } from 'react-native'
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -46,12 +46,13 @@ const Login = ({ navigation }) => {
     };
     return (
         <View style={styles.container}>
+            <Text style={styles.header}>Assignment of Groww</Text>
+            <Text style={styles.title}>Simple ToDo Application</Text>
             <GoogleSigninButton
-                style={{ width: 192, height: 48 }}
+                style={{ width: 230, height: 65 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
                 onPress={signIn}
-            // disabled={this.state.isSigninInProgress} 
             />
         </View>
     )
@@ -64,6 +65,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    header: {
+        fontSize: 34,
+        margin: 10,
+    },
+    title: {
+        fontSize: 16,
+        margin: 5
+    }
 });
 
 export default Login;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, Button, AsyncStorage } from 'react-native';
+import { View, TextInput, StyleSheet, Button } from 'react-native';
 import { addTodo, editTodo } from '../redux/actions/TodoActions';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -30,13 +30,9 @@ const TodoForm = (props) => {
                 description,
             }
             await props.addTodo(payload);
-            console.log("all data", props.todoData);
-            AsyncStorage.setItem(props.route.params.userId, JSON.stringify(props.todoData))
         }
         props.navigation.navigate("TodoList");
     }
-    console.log("props of todoForm", props);
-    // AsyncStorage.setItem(props.route.params.userId, props.todoData)
     return (
         <View
             style={styles.container}
