@@ -18,8 +18,10 @@ const Login = ({ navigation }) => {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
             if (userInfo?.user?.id) {
-                AsyncStorage.setItem('id', userInfo.user.id);
-                navigation.navigate("TodoList");
+                // AsyncStorage.setItem('id', userInfo.user.id);
+                navigation.navigate("TodoList" , {
+                    userId: userInfo.user.id
+                });
             }
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -41,11 +43,6 @@ const Login = ({ navigation }) => {
             }
         }
     };
-    const signOut = async () => {
-        await GoogleSignin.revokeAccess();
-        await GoogleSignin.signOut();
-        setGid(null);
-    }
     return (
         <View style={styles.container}>
             <GoogleSigninButton

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, Button } from 'react-native';
+import { View, TextInput, StyleSheet, Button, AsyncStorage } from 'react-native';
 import { addTodo, editTodo } from '../redux/actions/TodoActions';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -15,25 +15,28 @@ const TodoForm = (props) => {
         }
     }, [])
 
-    const createTodo = () => {
-        if (props.route.params?.task){
+    const createTodo = async() => {
+        if (props.route.params?.task) {
             const payload = {
                 task,
                 description,
                 id: props.route.params.id
             }
-            props.editTodo(payload)
-        }else{
+            await props.editTodo(payload)
+        } else {
             const payload = {
                 id: props.todoData.length + 1,
                 task,
                 description,
             }
-            props.addTodo(payload);
+            await props.addTodo(payload);
+            console.log("all data", props.todoData);
+            AsyncStorage.setItem(props.route.params.userId, JSON.stringify(props.todoData))
         }
         props.navigation.navigate("TodoList");
     }
     console.log("props of todoForm", props);
+    // AsyncStorage.setItem(props.route.params.userId, props.todoData)
     return (
         <View
             style={styles.container}
@@ -51,7 +54,7 @@ const TodoForm = (props) => {
                 onChangeText={val => setDescription(val)}
             />
             <Button
-                title={props.route.params ? 'Edit Todo' : 'Add Todo'}
+                title={props.route.params.task ? 'Edit Todo' : 'Add Todo'}
                 onPress={createTodo}
             />
         </View>
