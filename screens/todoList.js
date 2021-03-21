@@ -5,15 +5,7 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { editTodo } from '../redux/actions/TodoActions';
-
-const editTask = (task, description) => {
-    const payload = {
-        task,
-        description
-    }
-    console.log("edit payload", payload);
-}
+import { deleteTodo } from '../redux/actions/TodoActions';
 
 const TodoList = (props) => {
     useEffect(() => {
@@ -24,19 +16,25 @@ const TodoList = (props) => {
         getId();
     }, [])
 
-    const Item = ({ title, description }) => (
+    const removeTodo = (id) => {
+        props.deleteTodo(id);
+    }
+
+    const Item = ({ title, description, id }) => (
         <View style={styles.item}>
-            <Text style={styles.title}>{title}</Text>
-            <Text>{description}</Text>
+            <Text style={styles.title}>Task name: {title}</Text>
+            <Text style={styles.description}> Description: {description}</Text>
             <Button
                 title="Edit"
                 onPress={() => props.navigation.navigate("TodoForm", {
                     task: title,
-                    description
+                    description,
+                    id
                 })}
             />
             <Button
                 title="Delete"
+                onPress={() => removeTodo(id)}
             />
         </View>
     );
@@ -51,7 +49,7 @@ const TodoList = (props) => {
     const renderItem = ({ item }) => {
         console.log("item", item);
         return (
-            <Item title={item.task} description={item.description} />)
+            <Item title={item.task} description={item.description} id={item.id} />)
     };
 
     return (
@@ -66,8 +64,8 @@ const TodoList = (props) => {
                 keyExtractor={item => item.task}
             />
             <Button
-                onPress={signOut}
                 title="LogOut"
+                onPress={() => signOut}
             />
         </SafeAreaView>
     )
@@ -82,7 +80,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return bindActionCreators(
         {
-            // deleteBill
+            deleteTodo
         },
         dispatch
     );
@@ -99,8 +97,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
     },
     title: {
-        fontSize: 32,
+        fontSize: 24,
+        color: 'red'
     },
+    description: {
+        fontSize: 16,
+        color: 'green'
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);

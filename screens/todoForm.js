@@ -20,7 +20,7 @@ const TodoForm = (props) => {
             const payload = {
                 task,
                 description,
-                id: 1
+                id: props.route.params.id
             }
             props.editTodo(payload)
         }else{
@@ -51,7 +51,7 @@ const TodoForm = (props) => {
                 onChangeText={val => setDescription(val)}
             />
             <Button
-                title="Add Todo"
+                title={props.route.params ? 'Edit Todo' : 'Add Todo'}
                 onPress={createTodo}
             />
         </View>

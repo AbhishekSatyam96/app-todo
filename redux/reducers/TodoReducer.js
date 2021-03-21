@@ -18,7 +18,6 @@ const TodoReducer = (state = initialState, action) => {
     const {
         payload
     } = action;
-    console.log("state.todoData", state.todoData);
     switch (action.type) {
         case ACTION_TYPES.ADD_TODO:
             return {
@@ -31,6 +30,11 @@ const TodoReducer = (state = initialState, action) => {
                 todoData: state.todoData.map((data) => {
                     return data.id === payload.id ? payload : data;
                 }),
+            }
+        case ACTION_TYPES.DELETE_TODO:
+            return {
+                ...state,
+                todoData: state.todoData.filter((data) => data.id !== payload),
             }
         default:
             return state;

@@ -13,3 +13,9 @@ export const editTodo = (body) => (dispatch) => {
         payload: body
     });
 }
+export const deleteTodo = (id) => (dispatch) => {
+    dispatch({
+        type: ACTION_TYPES.DELETE_TODO,
+        payload: id
+    });
+}
