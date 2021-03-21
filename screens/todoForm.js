@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet, Button } from 'react-native';
 
 const TodoForm = () => {
     return (
@@ -13,6 +13,10 @@ const TodoForm = () => {
             <TextInput
                 style={styles.input}
                 placeholder="Description"
+            />
+            <Button 
+                title="Add Todo"
+                // onPress={}
             />
         </View>
     )

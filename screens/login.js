@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Button, View, StyleSheet, AsyncStorage } from 'react-native'
+import React, { useEffect } from 'react';
+import { View, StyleSheet, AsyncStorage } from 'react-native'
 import {
     GoogleSignin,
     GoogleSigninButton,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
-import TodoList from './todoList';
 
 
 const Login = ({ navigation }) => {
-    const [gId, setGid] = useState(null);
     useEffect(() => {
         GoogleSignin.configure({
             webClientId: '541102047627-be9dnk48ga5mn0o1d55mn9uhgjjil0pd.apps.googleusercontent.com'
@@ -20,7 +18,6 @@ const Login = ({ navigation }) => {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
             if (userInfo?.user?.id) {
-                setGid(userInfo.user.id);
                 AsyncStorage.setItem('id', userInfo.user.id);
                 navigation.navigate("TodoList");
             }
@@ -49,7 +46,6 @@ const Login = ({ navigation }) => {
         await GoogleSignin.signOut();
         setGid(null);
     }
-    console.log("gid...>", gId);
     return (
         <View style={styles.container}>
             <GoogleSigninButton
@@ -59,11 +55,6 @@ const Login = ({ navigation }) => {
                 onPress={signIn}
             // disabled={this.state.isSigninInProgress} 
             />
-            {gId ?
-                <Button
-                    onPress={signOut}
-                    title="LogOut"
-                /> : null}
         </View>
     )
 }

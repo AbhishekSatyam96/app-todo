@@ -2,8 +2,12 @@ import {ACTION_TYPES} from '../actions/ActionTypes';
 let initialState = {
     todoData: [
         {
-            "Task": 'Fist Task',
-            "Description": 'First Description'
+            "Task": 'First Task',
+            "Description": 'First Description',
+        },
+        {
+            "Task": 'Second Task',
+            "Description": 'Second Description',
         }
     ]
 }
