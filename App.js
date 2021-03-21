@@ -6,7 +6,8 @@ import Store from './redux/store';
 import { Provider } from 'react-redux';
 
 import Login from './screens/login';
-import Todo from './screens/todo';
+import TodoList from './screens/todoList';
+import TodoForm from './screens/todoForm';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -20,7 +21,8 @@ export default function App() {
           }}
         >
           <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Todo" component={Todo} />
+          <Stack.Screen name="TodoList" component={TodoList} />
+          <Stack.Screen name="TodoForm" component={TodoForm} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

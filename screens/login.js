@@ -5,7 +5,7 @@ import {
     GoogleSigninButton,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
-import Todo from './todo';
+import TodoList from './todoList';
 
 
 const Login = ({ navigation }) => {
@@ -22,7 +22,7 @@ const Login = ({ navigation }) => {
             if (userInfo?.user?.id) {
                 setGid(userInfo.user.id);
                 AsyncStorage.setItem('id', userInfo.user.id);
-                navigation.navigate("Todo");
+                navigation.navigate("TodoList");
             }
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {

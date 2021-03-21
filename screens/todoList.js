@@ -1,17 +1,22 @@
 import React from 'react';
-import { Text, AsyncStorage } from 'react-native';
+import { AsyncStorage, Button } from 'react-native';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-const Todo = (props) => {
+const TodoList = (props) => {
     const getId = async() => {
         const id = await AsyncStorage.getItem('id');
         console.log("here id", id);
     }
     getId();
-    console.log("props of todo",props);
+    console.log("props of todolist",props);
     return (
-        <Text>I am todo...</Text>
+        <>
+            <Button 
+                title="Create Todo"
+                onPress={() => props.navigation.navigate("TodoForm")}
+            />
+        </>
     )
 }
 
@@ -30,4 +35,4 @@ const mapDispatchToProps = dispatch => {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Todo);
+export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
