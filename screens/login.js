@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, View } from 'react-native'
+import { Button, View, StyleSheet } from 'react-native'
 import {
     GoogleSignin,
     GoogleSigninButton,
@@ -49,7 +49,7 @@ const Login = () => {
     }
     console.log("gid...>", gId);
     return (
-        <View>
+        <View style={styles.container}>
             {gId ? <Todo /> : null}
             <GoogleSigninButton
                 style={{ width: 192, height: 48 }}
@@ -58,12 +58,22 @@ const Login = () => {
                 onPress={signIn}
             // disabled={this.state.isSigninInProgress} 
             />
+            {gId ?
             <Button
                 onPress={signOut}
                 title="LogOut"
-            />
+            /> : null}
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  });
 
 export default Login;
