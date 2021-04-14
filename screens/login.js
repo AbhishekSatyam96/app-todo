@@ -46,7 +46,7 @@ const Login = ({ navigation }) => {
     };
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>Assignment of Groww</Text>
+            {/* <Text style={styles.header}>Assignment of Groww</Text> */}
             <Text style={styles.title}>Simple ToDo Application</Text>
             <GoogleSigninButton
                 style={{ width: 230, height: 65 }}
